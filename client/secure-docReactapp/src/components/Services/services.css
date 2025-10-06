@@ -1,0 +1,118 @@
+.wrapper {
+  background-color: #ffffff;
+  padding: 2rem;
+}
+
+
+.services-section {
+  padding: 3rem 1.5rem;
+  background-color: inherit;
+  font-family: "Segoe UI", sans-serif;
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+  color:#34BDB3;
+  font-family:Kaisei Decoi ;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.service-card {
+  background:#c3e4e1 ;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  
+   display: flex;              /* make content flexible */
+  flex-direction: column;     /* stack vertically */
+  align-items: center;        /* center horizontally */
+  justify-content: flex-start;/* keep text aligned from top */
+  text-align: center;         /* keep title + desc centered */
+
+}
+
+.service-card:hover {
+  
+  box-shadow: 0px 6px 12px rgba(94, 92, 92, 0.292);
+}
+.service-icon {
+  flex-shrink: 0; /* prevent shrinking */
+  margin-bottom: 15px;
+}
+.service-icon img{
+  width:138px;
+  height:138px;
+  margin-bottom: 15px;
+  object-fit: contain;
+}
+.service-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #222;
+min-height: 3rem; /* ensures equal title space */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.service-description {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+  flex-grow: 1; /* makes descriptions stretch evenly */
+}
+.learn-more-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #34BDB3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.learn-more-btn:hover {
+  background-color: #2aa79f;
+  transform: translateY(-2px);
+}
+.who{
+  background-color: white;
+}
+.who-for-title{
+    color: #041E1F;
+    font-family: Kaisei Decoi;
+    font-size: 2rem;
+    margin-bottom: 5rem;
+}
+
+.service-ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0A3D3F;
+    color: white;
+    font-family: Kadwa;
+    font-size: regular;
+    padding:10px;
+
+}
+ul li{
+    padding:0px 95px;
+}

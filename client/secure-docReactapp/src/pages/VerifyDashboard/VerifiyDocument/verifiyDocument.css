@@ -1,0 +1,8 @@
+.verifydoc-container{
+  display: flex;
+}
+.verify-content{
+    background-color: rgb(227, 241, 240);
+    padding:5rem;
+    border-radius: 12px;
+}

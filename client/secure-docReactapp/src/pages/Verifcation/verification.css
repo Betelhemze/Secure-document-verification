@@ -1,0 +1,95 @@
+.verify{
+    background-color:#9ECCC9;
+    min-height: 100vh;
+}
+h2{
+    font-family: Kadwa;
+    font-size: bolder;
+    margin-top:60px;
+}
+h4{
+  font-family: Javanese Text;
+  font-weight: lighter;
+}
+
+.verify-content{
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 2rem;
+}
+
+.verify-left,
+.verify-right {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+.verify-left label {
+    display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.verify-left input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+button {
+  background-color: #00bcd4;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0097a7;
+}
+
+.qr-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.scanner-wrapper {
+  margin-top: 1rem;
+}
+
+.feedback {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.feedback.success {
+  background-color: #e0f7fa;
+  color: #00796b;
+  border: 1px solid #00796b;
+}
+
+.feedback.error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #c62828;
+}
+
+.feedback.loading {
+  background-color: #fffde7;
+  color: #f9a825;
+  border: 1px solid #f9a825;
+}

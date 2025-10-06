@@ -1,0 +1,143 @@
+/* Reset */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Container */
+.home-container {
+  width: 100%;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #004d4d;
+  padding: 5px;
+  color: white;
+}
+
+.nav-left .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-right a {
+  margin: 0 1rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-right a:hover {
+  color: #ffdddd;
+}
+
+.register-btn {
+  background-color: #cc0000;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger span {
+  height: 3px;
+  width: 25px;
+  background: white;
+  margin: 4px 0;
+}
+.register-btn:hover {
+  background-color: #990000;
+}
+@media (max-width: 768px) {
+  .nav-right {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 1rem;
+    background-color: #004d40;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  .nav-right.active {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+/* Hero Section */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8rem 2rem;
+  background-color:#9ECCC9;
+  flex-wrap: wrap;
+}
+
+.hero-text {
+  max-width: 600px;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  color: #003333;
+  margin-bottom: 1rem;
+}
+
+.hero-text p {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.hero-buttons button {
+  margin-right: 1rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.verify-btn {
+  background-color: #009999;
+  color: white;
+}
+
+.verify-btn:hover {
+  background-color: #007777;
+}
+
+.get-started-btn {
+  background-color: white;
+  color: #009999;
+  border: 2px solid #009999;
+}
+
+.get-started-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.hero-image img {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+}
+

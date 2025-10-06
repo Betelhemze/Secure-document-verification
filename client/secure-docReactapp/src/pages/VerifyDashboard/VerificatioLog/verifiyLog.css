@@ -1,0 +1,86 @@
+.verifiylog-container{
+    display:flex;
+}
+.verification-logs {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.filter-panel {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-panel input,
+.filter-panel select,
+.filter-panel button {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.filter-panel button {
+  background-color: #3FD0C3;
+  color: white;
+  cursor: pointer;
+}
+
+.document-preview {
+  margin: 20px 0;
+}
+
+.document-preview img {
+  width: 150px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.document-preview img:hover {
+  transform: scale(1.05);
+}
+
+.logs-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f8f8f8;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.logs-table th,
+.logs-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.logs-table th {
+  background: #B4DBD8;
+  color: white;
+}
+
+.logs-table tr:hover {
+  background: #e6ffe6;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content img {
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 10px;
+}

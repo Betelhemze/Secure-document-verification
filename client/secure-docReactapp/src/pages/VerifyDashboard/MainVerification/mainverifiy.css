@@ -1,0 +1,32 @@
+.verifydashboard-container{
+    display:flex;
+}
+.status.verified {
+  color: green;
+  font-weight: bold;
+}
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* spacing between dot and text */
+  font-size: 0.95rem;
+  color: #333;
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.verified { background-color: #27c7a9; }
+.dot.rejected { background-color: red; }
+.dot.pending { background-color: orange; }
+
+.chart-placeholder{
+ padding-bottom:20px
+}
+
+ .active{
+    background-image: linear-gradient(to right top, #206a52, #23755b, #278164, #2a8c6d, #2e9876, #31a17d, #33a983, #36b28a, #38b990, #3ac195, #3dc89b, #3fd0a1);
+ }

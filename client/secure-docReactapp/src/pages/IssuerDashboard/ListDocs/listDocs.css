@@ -1,0 +1,129 @@
+.list-container {
+  display: flex;
+}
+.content-wrapper {
+  display: flex;
+  gap: 2rem; /* spacing between filters and table */
+  align-items: flex-start; /* align top edges */
+}
+
+
+
+
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f4f9fb;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.header h3 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.icons span {
+  margin-left: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.dashboard-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.filters {
+ display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 280px;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-group h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  text-align: left; /* ensures titles are not centered */
+}
+.filter-group label {
+  font-size: 0.95rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.filters > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.doc-table {
+  flex: 1; /* take remaining space */
+}
+.filters label {
+  font-size: 1rem;
+  color: #555;
+  cursor: pointer;
+}
+.filters input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.verified {
+  color: green;
+  font-weight: bold;
+}
+
+.doc-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.doc-table th, .doc-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.doc-table th {
+  background-color: #eaf4f2;
+  color: #333;
+}
+
+.doc-table td.verified {
+  color: green;
+  font-weight: bold;
+}
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column;
+  }
+
+  .filters {
+    width: 100%;
+  }
+}
