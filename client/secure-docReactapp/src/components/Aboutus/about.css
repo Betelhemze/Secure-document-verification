@@ -1,0 +1,226 @@
+.about-container {
+  font-family: 'Poppins', sans-serif;
+  color: #03363d;
+  background-color: #f1f9f8;
+  padding: 40px 80px;
+  line-height: 1.7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.about-header h1 {
+  font-size: 2.5rem;
+  color: #065f5b;
+  margin-bottom: 15px;
+}
+
+.about-header p {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: #05668d;
+}
+
+.about-mission-vision {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  margin: 60px 0;
+}
+
+.mission, .vision {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  background-color: #e0f2f1;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mission img, .vision img {
+  width: 180px;
+  height: auto;
+}
+
+.mission h2, .vision h2 {
+  color: #025955;
+  margin-bottom: 10px;
+}
+
+.about-values {
+  text-align: center;
+  margin-top: 80px;
+}
+
+.about-values h2 {
+  color: #025955;
+  margin-bottom: 30px;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.value-card {
+  background-color: #eafaf7;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.value-card h3 {
+  color: #05668d;
+  margin-bottom: 10px;
+}
+
+.about-team {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-top: 80px;
+  background-color: #d7efec;
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.about-team img {
+  width: 220px;
+  height: auto;
+}
+
+.about-team h2 {
+  color: #025955;
+  margin-bottom: 15px;
+}
+
+.about-footer {
+  text-align: center;
+  margin-top: 60px;
+  padding: 20px 0;
+  color: #025955;
+  border-top: 1px solid #b2dfdb;
+}
+/* === Testimonials Section === */
+.testimony {
+  text-align: center;
+  margin-top: 100px;
+  background-color: #e0f2f1;
+  padding: 70px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.testimony-title {
+  font-size: 2rem;
+  color: #025955;
+  margin-bottom: 10px;
+}
+
+.testimony-sub {
+  color: #05668d;
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+}
+
+.testimony-wrapper {
+  display: inline-flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.testimony-card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  width: 300px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.testimony-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.testimony-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #00bfa6;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.testimony-card h3 {
+  color: #025955;
+  font-size: 1.1rem;
+  margin: 5px 0;
+}
+
+.testimony-card span {
+  color: #05668d;
+  font-size: 0.9rem;
+}
+
+.testimony-card p {
+  font-style: italic;
+  color: #03363d;
+  margin: 15px 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.stars {
+  color: gold;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+/* Slider Dots */
+.slider-dots {
+  margin-top: 25px;
+}
+
+.dot {
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  background: #a7d8d5;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active,
+.dot:hover {
+  background: #025955;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .testimony-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .testimony-card {
+    width: 90%;
+  }
+}
+

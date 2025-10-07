@@ -19,7 +19,7 @@ const Navbar = () => {
         <a href="/">Home</a>
         <a href="/verify">Verify</a>
         <a href="/about">About</a>
-        <a href="/#contact-us">Contact Us</a>
+        <a href="/contact">Contact Us</a>
         <a href="/login">Login</a>
         <button className="register-btn">Register</button>
       </div>

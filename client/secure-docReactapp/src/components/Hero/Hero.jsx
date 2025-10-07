@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import './Hero.css'
 import pc from '../../assets/person.png'
+import { Link } from 'react-router-dom';
 const Hero = () => {
  const [isOpen, setIsOpen] = useState(false);
 
@@ -37,8 +38,12 @@ const Hero = () => {
             offices to issue and verify digital documents.
           </p>
           <div className="hero-buttons">
+           <Link to="/verify">
             <button className="verify-btn">Verify Document</button>
+            </Link>
+            <Link to="/register">
             <button className="get-started-btn">Get Started</button>
+            </Link>
           </div>
         </div>
         <div className="hero-image">
