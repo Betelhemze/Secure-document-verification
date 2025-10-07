@@ -20,6 +20,7 @@ const MainVerification = () => {
            }
          };
        }, []);
+       const userName = localStorage.getItem("name");
   return (
     <div className="verifydashboard-container">
       <aside className="sidebar">
@@ -28,7 +29,7 @@ const MainVerification = () => {
         <nav>
           <ul className="dash">
             <li>
-              <a href="#" >
+              <a href="#">
                 <i class="bx  bx-dashboard-alt"></i>
                 <span className="nav-item">Home</span>
               </a>
@@ -62,7 +63,7 @@ const MainVerification = () => {
       </aside>
       <main className="main-content">
         <header className="header">
-          <h3>Welcome,Issuer</h3>
+          <h3>Welcome,{userName || "verifier"}</h3>
           <div className="icons">
             <span>🔍</span>
             <span>👤</span>

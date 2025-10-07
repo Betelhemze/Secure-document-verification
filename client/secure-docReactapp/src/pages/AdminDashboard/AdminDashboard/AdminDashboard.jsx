@@ -25,7 +25,7 @@ const AdminDashboard = () => {
              };
            }, []);
            
-    
+    const userName = localStorage.getItem("name");
   return (
     <div className="admin-container">
       <aside className="sidebar">
@@ -74,7 +74,7 @@ const AdminDashboard = () => {
       </aside>
       <main className="main-content">
         <header className="header">
-          <h3>Welcome,Admin</h3>
+          <h3>Welcome,{userName || "admin"}</h3>
           <div className="icons">
             <span>🔍</span>
             <span>👤</span>

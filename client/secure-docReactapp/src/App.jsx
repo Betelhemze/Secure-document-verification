@@ -22,17 +22,23 @@ import VerifiyLog from "./pages/VerifyDashboard/VerificatioLog/VerifiyLog.jsx";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard/AdminDashboard.jsx";
 import AdminLogs from "./pages/AdminDashboard/AdminLog/AdminLogs.jsx";
 import UserDoc from "./pages/AdminDashboard/UserDocs/UserDoc.jsx";
-
+import RoleProtectedRoute from "./components/Rolebasedroute/RoleProtectedRoute.jsx"
 
 function App() {
   return (
     <>
       <Routes>
-        
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<LoginSignup />} />
         <Route path="/verify" element={<Verification />} />
-        <Route path="/issuer" element={<Main />} />
+        <Route
+          path="/issuer"
+          element={
+            <RoleProtectedRoute allowedRoles="issuer">
+              <Main />
+            </RoleProtectedRoute>
+          }
+        />
         <Route path="/UploadDocx" element={<UploadDocx />} />
         <Route path="/listDocs" element={<ListDocs />} />
         <Route path="/issuerAnalytics" element={<IssuerAnalysis />} />

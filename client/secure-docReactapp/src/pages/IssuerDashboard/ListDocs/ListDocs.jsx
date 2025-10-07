@@ -1,12 +1,64 @@
 import React , {useEffect,useState,useMemo}from 'react'
+import { Link } from 'react-router-dom';
+import axios from "axios"
 import './listDocs.css'
 const ListDocs = () => {
   
-  const [documents, setDocuments] = useState([
-    { title: "Document A", status: "Verified", date: "2023/10/02", type: "PDF" },
-    { title: "Document B", status: "Pending", date: "2023/09/28", type: "Word" },
-    { title: "Document C", status: "Verified", date: "2023/10/01", type: "PDF" },
-  ]);
+  const [documents, setDocuments] = useState([]);
+  const fetchDocuments = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const params = new URLSearchParams();
+
+    if (filters.type.length > 0) params.append("type", filters.type.join(","));
+    if (filters.status.length > 0) params.append("status", filters.status.join(","));
+    if (filters.dateRange.from) params.append("startDate", filters.dateRange.from);
+    if (filters.dateRange.to) params.append("endDate", filters.dateRange.to);
+
+    const res = await axios.get(`http://localhost:3000/api/document?${params.toString()}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    setDocuments(res.data);
+  } catch (error) {
+    console.error("Error fetching documents:", error);
+  }
+};
+const handleEdit = (id) => {
+  // Example: navigate to edit page
+  console.log("Edit document:", id);
+  // navigate(`/edit-doc/${id}`);
+};
+
+const handleWithdraw = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+    await axios.patch(
+      `http://localhost:3000/api/document/${id}/status`,
+      { status: "Revoked" },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    alert("Document withdrawn successfully!");
+    fetchDocuments(); // refresh list
+  } catch (err) {
+    console.error(err);
+    alert("Failed to withdraw document.");
+  }
+};
+
+const handleHistory = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await axios.get(
+      `http://localhost:3000/api/document/${id}/history`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    console.log("Document history:", res.data);
+    // you can show it in a modal later
+  } catch (err) {
+    console.error(err);
+  }
+};
+
   const [filters, setFilters] = useState({
     type: [],
     status: [],
@@ -49,9 +101,9 @@ const ListDocs = () => {
 
     const dateMatch =
       (!filters.dateRange.from ||
-        new Date(doc.date) >= new Date(filters.dateRange.from)) &&
+        new Date(doc.dateOfIssue) >= new Date(filters.dateRange.from)) &&
       (!filters.dateRange.to ||
-        new Date(doc.date) <= new Date(filters.dateRange.to));
+        new Date(doc.dateOfIssue) <= new Date(filters.dateRange.to));
 
     return typeMatch && statusMatch && dateMatch;
   });
@@ -74,6 +126,12 @@ const ListDocs = () => {
                }
              };
            }, []);
+            const userName = localStorage.getItem("name");
+            //every time filter changes it automatically refershes the list from the backend
+            useEffect(() => {
+              fetchDocuments();
+            }, [filters]);
+
   return (
     <div className="list-container">
       <aside className="sidebar">
@@ -82,28 +140,28 @@ const ListDocs = () => {
         <nav>
           <ul className="dash">
             <li>
-              <a href="#">
+              <Link to="/issuer">
                 <i class="bx  bx-dashboard-alt"></i>
                 <span className="nav-item">Dashboard</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/UploadDocx">
                 <i class="bx  bx-file-plus"></i>
                 <span className="nav-item">Uploaded Document</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="actives">
+              <Link to="/listDocs" className="actives">
                 <i class="bx  bx-checklist"></i>
                 <span className="nav-item">List of documents</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/issuerAnalytics">
                 <i class="bx  bx-chart-line"></i>
                 <span className="nav-item">Analytics</span>
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#" className="logout">
@@ -116,7 +174,7 @@ const ListDocs = () => {
       </aside>
       <main className="main-content">
         <header className="header">
-          <h3>Welcome,Issuer</h3>
+          <h3>Welcome,{userName || "issuer"}</h3>
           <div className="icons">
             <span>🔍</span>
             <span>👤</span>
@@ -128,7 +186,7 @@ const ListDocs = () => {
           <section className="filters">
             <div className="filter-group">
               <h4>Type</h4>
-              {["PDF", "DOCX", "XLSX"].map((type) => (
+              {["Transcript", "Certificate", "License"].map((type) => (
                 <label key={type}>
                   <input
                     type="checkbox"
@@ -142,7 +200,15 @@ const ListDocs = () => {
 
             <div className="filter-group">
               <h4>Status</h4>
-              {["Verified", "Rejected", "Pending"].map((status) => (
+              {[
+                "Draft",
+                "Issued",
+                "Verified",
+                "Rejected",
+                "Revoked",
+                "Expired",
+                "Archived",
+              ].map((status) => (
                 <label key={status}>
                   <input
                     type="checkbox"
@@ -183,19 +249,44 @@ const ListDocs = () => {
                   <th>Status</th>
                   <th>Date</th>
                   <th>type</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredDocs.map((doc, index) => (
-                  <tr key={index}>
-                    <td>{doc.title}</td>
-                    <td className={doc.status === "Verified" ? "verified" : ""}>
-                      {doc.status}
-                    </td>
-                    <td>{doc.date}</td>
-                    <td>{doc.type}</td>
+                {documents.length > 0 ? (
+                  documents.map((doc, index) => (
+                    <tr key={index}>
+                      <td>{doc.title}</td>
+                      <td
+                        className={doc.status === "Verified" ? "verified" : ""}
+                      >
+                        {doc.status}
+                      </td>
+                      <td>{new Date(doc.dateOfIssue).toLocaleDateString()}</td>
+                      <td>{doc.documentType}</td>
+                      <td className="actions">
+                        {(doc.status === "Draft" ||
+                          doc.status === "Issued") && (
+                          <button onClick={() => handleEdit(doc._id)}>
+                            ✏️ Edit
+                          </button>
+                        )}
+                        {doc.status !== "Revoked" && (
+                          <button onClick={() => handleWithdraw(doc._id)}>
+                            🚫 Withdraw
+                          </button>
+                        )}
+                        <button onClick={() => handleHistory(doc._id)}>
+                          📜 View History
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5">No documents found</td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </section>

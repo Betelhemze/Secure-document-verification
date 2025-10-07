@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import UploadLineChart from '../../../components/Charts/UploadLineChart';
 import StatusPieChart from '../../../components/Charts/StatusPieChart';
+import { Link } from 'react-router-dom';
 
 import './issueranalysis.css'
 const IssuerAnalysis = () => {
@@ -22,6 +23,7 @@ const IssuerAnalysis = () => {
                    }
                  };
                }, []);
+               const userName = localStorage.getItem("name");
   return (
     <div className="Ianalysis-container">
       <aside className="sidebar">
@@ -30,28 +32,28 @@ const IssuerAnalysis = () => {
         <nav>
           <ul className="dash">
             <li>
-              <a href="#">
+              <Link to="/issuer">
                 <i class="bx  bx-dashboard-alt"></i>
                 <span className="nav-item">Dashboard</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/UploadDocx">
                 <i class="bx  bx-file-plus"></i>
                 <span className="nav-item">Uploaded Document</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="actives">
+              <Link to="/listDocs" className="actives">
                 <i class="bx  bx-checklist"></i>
                 <span className="nav-item">List of documents</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/issuerAnalytics">
                 <i class="bx  bx-chart-line"></i>
                 <span className="nav-item">Analytics</span>
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#" className="logout">
@@ -64,7 +66,7 @@ const IssuerAnalysis = () => {
       </aside>
       <main className="main-content">
         <header className="header">
-          <h3>Welcome,Issuer</h3>
+          <h3>Welcome,{userName || "issuer"}</h3>
           <div className="icons">
             <span>🔍</span>
             <span>👤</span>

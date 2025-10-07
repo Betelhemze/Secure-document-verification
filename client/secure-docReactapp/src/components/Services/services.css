@@ -1,6 +1,6 @@
 .wrapper {
   background-color: #ffffff;
-  padding: 2rem;
+  padding: 0rem;
 }
 
 
@@ -111,6 +111,7 @@ min-height: 3rem; /* ensures equal title space */
     font-family: Kadwa;
     font-size: regular;
     padding:10px;
+    margin: 0px;
 
 }
 ul li{

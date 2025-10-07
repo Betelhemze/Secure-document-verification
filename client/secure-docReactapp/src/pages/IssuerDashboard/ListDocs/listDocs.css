@@ -127,3 +127,15 @@
     width: 100%;
   }
 }
+.refresh-btn {
+  background-color: #6b21a8;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.refresh-btn:hover {
+  background-color: #9333ea;
+}

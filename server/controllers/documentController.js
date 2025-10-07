@@ -3,11 +3,19 @@ const User = require("../models/User");
 const Document = require("../models/documentSchema")
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const QRCode = require("qrcode");
 
 const uploadDocs = asyncHandler(async(req,res) =>{
-     const { title, content, institution } = req.body;
+     const { title, documentType, dateOfIssue, issuerReference, ownerName } =
+       req.body;
 
-     if (!title || !content || !institution) {
+     if (
+       !title ||
+       !documentType ||
+       !dateOfIssue ||
+       !issuerReference ||
+       !ownerName
+     ) {
        res.status(400);
        throw new Error("All fields are required");
      }
@@ -19,13 +27,95 @@ const uploadDocs = asyncHandler(async(req,res) =>{
 
      const newDoc = await Document.create({
        title,
-       content,
-       institution,
+       documentType,
+       dateOfIssue,
+       issuerReference,
+       ownerName,
        uploadedBy: req.user.id,
        verified: false,
      });
-       res.status(201).json(newDoc);
+     //generte a qrcode(dataURL) from the document uniqueID
+     const qrCodeData = await QRCode.toDataURL(`http://localhost:5173`);
+
+     //save qr code onto the document
+       newDoc.qrCode = qrCodeData;
+       await newDoc.save();
+
+       res.status(201).json({
+         message: "Document uploaded successfully",
+         document: newDoc,
+       });
 });
+ const getDocuments = async (req, res) => {
+  try {
+    const { type, status, startDate, endDate } = req.query;
+    const query = {};
+
+    if (type) query.documentType = { $in: type.split(",") };
+    if (status) query.status = { $in: status.split(",") };
+
+    if (startDate || endDate) {
+      query.dateOfIssue = {};
+      if (startDate) query.dateOfIssue.$gte = new Date(startDate);
+      if (endDate) query.dateOfIssue.$lte = new Date(endDate);
+    }
+
+    const documents = await Document.find(query);
+    res.status(200).json(documents);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error fetching documents" });
+  }
+};
+
+ const updateDocumentStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const updated = await Document.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+    if (!updated)
+      return res.status(404).json({ message: "Document not found" });
+
+    res.status(200).json({ message: "Status updated", document: updated });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to update document" });
+  }
+};
+
+ const getDocumentHistory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const doc = await Document.findById(id);
+    if (!doc) return res.status(404).json({ message: "Document not found" });
+    res.status(200).json({ history: doc.history || [] });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to get history" });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const viewIssuedDocs = asyncHandler(async (req, res) => {
     if (!["issuer", "admin"].includes(req.user.role)) {
       res.status(403);
@@ -96,5 +186,14 @@ const viewUploadedStatus = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = {uploadDocs, viewIssuedDocs, verifyDocument, viewVerifiedDocs,viewUploadedStatus};
+module.exports = {
+  uploadDocs,
+  viewIssuedDocs,
+  verifyDocument,
+  viewVerifiedDocs,
+  viewUploadedStatus,
+  getDocuments,
+  updateDocumentStatus,
+  getDocumentHistory,
+};
 

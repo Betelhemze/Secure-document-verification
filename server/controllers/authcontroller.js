@@ -44,6 +44,7 @@ const login = asyncHandler (async (req,res) =>{
     const user = await User.findOne({email});
 
     if(user && (await bcrypt.compare(password, user.password))){
+      //create token
         const accessToken = jwt.sign(
           {user:  {
                name: user.name,
@@ -54,7 +55,15 @@ const login = asyncHandler (async (req,res) =>{
             process.env.JWT_SECRET,
             { expiresIn: "1d" }
         );
-        res.status(200).json({ accessToken });
+        res
+          .status(200)
+          .json({
+            message: "Login successful",
+            accessToken,
+            role: user.role,
+            name: user.name,
+            id: user._id,
+          });
     } else {
         res.status(401);
         throw new Error("Invalid credentials");

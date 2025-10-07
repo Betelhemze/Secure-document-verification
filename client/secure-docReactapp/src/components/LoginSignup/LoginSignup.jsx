@@ -68,10 +68,18 @@ export default function LoginSignup() {
       console.log("success:", res.data);
 
       if (isLogin) {
-        localStorage.setItem("token", res.data.token);
-        navigate("/dashboard");
-      } else {
-        navigate("/dashboard");
+        localStorage.setItem("token", res.data.accessToken);
+        localStorage.setItem("role",res.data.role);
+        localStorage.setItem("name",res.data.name);
+        if (res.data.role === "issuer"){
+          navigate("/issuer");
+        } else if(res.data.role == "verifier"){
+          navigate("/verifyDashboard");
+        }else if(res.data.role =="admin"){
+          navigate("/adminDashboard");
+        }
+      } else{
+        navigate("/")
       }
     } catch (err) {
       alert(err.response?.data?.message || "Something went wrong, try again!");
