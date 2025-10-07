@@ -1,9 +1,10 @@
 .about-container {
   font-family: 'Poppins', sans-serif;
   color: #03363d;
-  background-color: #f5f9f8;
+  background-color: #f1f9f8;
   padding: 40px 80px;
   line-height: 1.7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .about-header {

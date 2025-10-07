@@ -7,9 +7,10 @@ export default function SecureDocsPolicy() {
   const [tab, setTab] = useState("privacy");
 
   return (
-    
+    <>
+    <Navbar></Navbar>
     <div className="policy-root">
-        <Navbar></Navbar>
+        
       <header className="policy-header">
         <br />
         <h1>Secure Document Verification — Policies</h1>
@@ -198,6 +199,7 @@ export default function SecureDocsPolicy() {
         <small>Remember to replace placeholders (dates, contact email, organization name) before publishing.</small>
       </footer>
     </div>
+    </>
   );
 }
 

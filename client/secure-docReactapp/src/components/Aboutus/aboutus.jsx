@@ -9,9 +9,10 @@ import { motion } from 'framer-motion';
 
 export default function AboutUs() {
   return (
-    
+    <>
+    <Navbar></Navbar>
     <div className="about-container">
-        <Navbar></Navbar>
+        
       <header className="about-header">
         
         <h1>About SecureDocs</h1>
@@ -149,5 +150,6 @@ export default function AboutUs() {
        <Footer></Footer>
       </footer>
     </div>
+    </>
   );
 }

@@ -24,6 +24,7 @@ import AdminLogs from "./pages/AdminDashboard/AdminLog/AdminLogs.jsx";
 import UserDoc from "./pages/AdminDashboard/UserDocs/UserDoc.jsx";
 import SecureDocsPolicy from "./components/Terms/privacypolicy.jsx";
 import AboutUs from "./components/Aboutus/aboutus.jsx";
+import ContactUs from "./components/ContactUs/contactus.jsx";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path="/userDocumentaion" element={<UserDoc />} />
         <Route path="/policies" element={<SecureDocsPolicy />} />
         <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<ContactUs />} />
         <Route
           path="/dashboard"
           element={

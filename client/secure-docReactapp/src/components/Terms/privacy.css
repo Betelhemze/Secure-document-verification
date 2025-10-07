@@ -73,28 +73,8 @@
 
 .policy-section p, .policy-section ul, .policy-section li {
   line-height: 1.55;
-  color: #0f172a;
+  color: hsl(222, 47%, 11%);
 }
-.blob {
-  position: absolute;
-  top: -60px;
-  right: -80px;
-  width: 200px;
-  height: 200px;
-  background: rgba(37, 99, 235, 0.2); /* soft accent blue */
-  border-radius: 50%;
-  animation: morph 8s infinite ease-in-out;
-  z-index: -1;
-}
-
-@keyframes morph {
-  0% { border-radius: 50% 50% 50% 50%; }
-  25% { border-radius: 60% 40% 30% 70%; }
-  50% { border-radius: 40% 60% 70% 30%; }
-  75% { border-radius: 30% 70% 60% 40%; }
-  100% { border-radius: 50% 50% 50% 50%; }
-}
-
 
 .policy-section ul { padding-left: 18px; }
 
