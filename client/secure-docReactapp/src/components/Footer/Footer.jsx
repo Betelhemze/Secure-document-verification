@@ -32,7 +32,7 @@ export default function Footer() {
               <h4>Legal</h4>
               <ul>
                 <li>
-                  <a href="/privacy">Privacy Policy</a>
+                  <a href="/policies">Privacy Policy</a>
                 </li>
                 <li>
                   <a href="/terms">Terms of Service</a>
@@ -65,7 +65,7 @@ export default function Footer() {
       </div>
 
       <hr />
-      <p className="footer-copy">© Secure Docs 2024. All rights reserved.</p>
+      <p className="footer-copy">© 2025 Secure Docs. All rights reserved.</p>
     </footer>
   );
 }

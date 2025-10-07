@@ -22,6 +22,8 @@ import VerifiyLog from "./pages/VerifyDashboard/VerificatioLog/VerifiyLog.jsx";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard/AdminDashboard.jsx";
 import AdminLogs from "./pages/AdminDashboard/AdminLog/AdminLogs.jsx";
 import UserDoc from "./pages/AdminDashboard/UserDocs/UserDoc.jsx";
+import SecureDocsPolicy from "./components/Terms/privacypolicy.jsx";
+import AboutUs from "./components/Aboutus/aboutus.jsx";
 
 
 function App() {
@@ -42,6 +44,8 @@ function App() {
         <Route path="/adminDashboard" element={<AdminDashboard />} />
         <Route path="/adminlogs" element={<AdminLogs />} />
         <Route path="/userDocumentaion" element={<UserDoc />} />
+        <Route path="/policies" element={<SecureDocsPolicy />} />
+        <Route path="/about" element={<AboutUs />} />
         <Route
           path="/dashboard"
           element={
