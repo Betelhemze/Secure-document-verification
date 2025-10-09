@@ -25,7 +25,8 @@ import UserDoc from "./pages/AdminDashboard/UserDocs/UserDoc.jsx";
 import SecureDocsPolicy from "./components/Terms/privacypolicy.jsx";
 import AboutUs from "./components/Aboutus/aboutus.jsx";
 import ContactUs from "./components/ContactUs/contactus.jsx";
-
+import RoleProtectedRoute from "./components/Rolebasedroute/RoleProtectedRoute.jsx"
+import Service from "./components/Serve/Serve.jsx";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
         <Route path="/policies" element={<SecureDocsPolicy />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="/service" element={<Service />} />
         <Route
           path="/dashboard"
           element={

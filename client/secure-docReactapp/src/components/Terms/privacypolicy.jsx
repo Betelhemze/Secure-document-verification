@@ -189,14 +189,14 @@ export default function SecureDocsPolicy() {
 
             <h4>10. Contact</h4>
             <p>
-              For legal or policy questions, contact <a href="mailto:support@yourdomain.com">support@yourdomain.com</a>.
+              For legal or policy questions, contact <a href="mailto:support@yourdomain.com">support@securedocs.com</a>.
             </p>
           </article>
         )}
       </main>
 
       <footer className="policy-footer">
-        <small>Remember to replace placeholders (dates, contact email, organization name) before publishing.</small>
+        <small>You can contact us using our email.Thank you</small>
       </footer>
     </div>
     </>

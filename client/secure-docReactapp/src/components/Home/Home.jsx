@@ -5,6 +5,7 @@ import Navbar from '../Navbar/Navbar'
 import WorkingProcess from '../Process/Process'
 import ServicesSection from '../Services/Services'
 import Ctasection from '../Call/Call'
+import Why from '../Whychooseus/why'
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <Hero />
       <ServicesSection />
       <WorkingProcess />
+      <Why/>
       <Ctasection/>
       <Footer />
     </div>

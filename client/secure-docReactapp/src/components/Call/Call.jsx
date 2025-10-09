@@ -6,7 +6,7 @@ const Call = () => {
     <div className="cta-section">
       <h2 className="cta-title">Are you ready to make your first verification?</h2>
      <p className="cta-subtitle">Start verifiying documents securely and efforetlessly in just a few clicks</p>
-     <a href="#" className="cta-btn">Go to Verify page</a>
+     <a href="/verify" className="cta-btn">Go to Verify page</a>
     </div>
   )
 }

@@ -2,33 +2,16 @@ import React, {useState} from 'react'
 import './Hero.css'
 import pc from '../../assets/person.png'
 import { Link } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar';
 const Hero = () => {
  const [isOpen, setIsOpen] = useState(false);
 
  const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
+    <>
+    <Navbar/>
     <div className="home-container">
-      {/* Navbar */}
-      <nav className="navbar">
-        <div className="nav-left">
-          <span className="logo">SecureDocs</span>
-        </div>
-        <div className="hamburger" onClick={toggleMenu}>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        <div className={`nav-right ${isOpen ? "active" : ""}`}>
-          <a href="/">Home</a>
-          <a href="/verify">Verify</a>
-          <a href="/about">About</a>
-          <a href="/#contact-us">Contact Us</a>
-          <a href="/login">Login</a>
-          <button className="register-btn">Register</button>
-        </div>
-      </nav>
-
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-text">
@@ -41,7 +24,7 @@ const Hero = () => {
            <Link to="/verify">
             <button className="verify-btn">Verify Document</button>
             </Link>
-            <Link to="/register">
+            <Link to="/auth">
             <button className="get-started-btn">Get Started</button>
             </Link>
           </div>
@@ -51,6 +34,7 @@ const Hero = () => {
         </div>
       </section>
       </div>
+      </>
   );
 }
 
