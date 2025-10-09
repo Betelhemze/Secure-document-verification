@@ -1,0 +1,150 @@
+.why-container {
+  padding: 4rem 2rem;
+  background-color: #f9fdfc;
+  color: #023535;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.why-header {
+  text-align: center;
+  max-width: 850px;
+  margin: 0 auto 3rem;
+}
+
+.why-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #025955;
+  margin-bottom: 1rem;
+}
+
+.why-header h1 span {
+  color: #06a77d;
+}
+
+.why-header p {
+  font-size: 1.1rem;
+  color: #4f5f5a;
+  line-height: 1.6;
+}
+
+/* Grid */
+.reasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Card */
+.reason-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.reason-card::before {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -60%;
+  width: 220%;
+  height: 220%;
+  background: radial-gradient(circle at center, #06a77d33, transparent 70%);
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+.reason-card:hover::before {
+  opacity: 1;
+}
+
+.reason-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(2, 89, 85, 0.15);
+}
+
+.reason-card .icon {
+  color: #06a77d;
+  margin-bottom: 1rem;
+  background: #e0f2f1;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-inline: auto;
+  transition: all 0.3s ease;
+}
+
+.reason-card:hover .icon {
+  transform: rotate(10deg) scale(1.1);
+  background: #06a77d;
+  color: white;
+}
+
+.reason-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.8rem;
+  color: #025955;
+}
+
+.reason-card p {
+  font-size: 0.95rem;
+  color: #4a5a58;
+}
+
+/* Final Section */
+.final-section {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.final-section h2 {
+  color: #025955;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.final-section p {
+  color: #4a5a58;
+  margin: 0.8rem 0 1.5rem;
+}
+
+.cta-btn {
+  background-color: #06a77d;
+  border: none;
+  padding: 0.9rem 2rem;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.cta-btn:hover {
+  background-color: #025955;
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .why-header h1 {
+    font-size: 2rem;
+  }
+
+  .reason-card {
+    padding: 1.5rem;
+  }
+
+  .final-section h2 {
+    font-size: 1.6rem;
+  }
+}

@@ -25,8 +25,7 @@ const Process = [
 export default function WorkingProcess() {
   return (
     <section className="process-section">
-      <h2 className="process-title">Working Process</h2>
-      <h3>How does it work</h3>
+      <h3 className="process-title">How does it work</h3>
       <div className="process-steps">
         {Process.map((step, index) => (
           <div className="process-card" key={index}>

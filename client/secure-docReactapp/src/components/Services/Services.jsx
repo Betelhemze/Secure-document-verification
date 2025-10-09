@@ -40,11 +40,11 @@ export default function ServicesSection() {
       <h2 className="section-title">Our Services</h2>
       <div className="services-grid">
         {services.map((service, index) => (
-          <div className="service-card" key={index}>
-            <div className="service-icon"><img src={service.image} alt={service.title}/></div>
-            <h3 className="service-title">{service.title}</h3>
-            <p className="service-description">{service.description}</p>
-            <button className="learn-more-btn">Learn More</button>
+          <div className="services-card" key={index}>
+            <div className="services-icon"><img src={service.image} alt={service.title}/></div>
+            <h3 className="services-title">{service.title}</h3>
+            <p className="services-description">{service.description}</p>
+            <a href="/service" className="cta-button">Learn More </a>
           </div>
         ))}
       </div>
@@ -52,7 +52,7 @@ export default function ServicesSection() {
     </section>
     <div className="who">
         <h3 className="who-for-title">Who It's For</h3>
-        <ul className="service-ul">
+        <ul className="services-ul">
           <li>Universties</li>
           <li>Banks</li>
           <li>Employers</li>

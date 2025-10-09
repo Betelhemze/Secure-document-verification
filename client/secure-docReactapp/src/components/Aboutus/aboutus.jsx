@@ -108,7 +108,7 @@ export default function AboutUs() {
 
   <div className="testimony-wrapper">
     <div className="testimony-card">
-      <img src="https://randomuser.me/api/portraits/women/79.jpg" alt="Hana" />
+        <img src="https://randomuser.me "/>
       <h3>Hana Bekele</h3>
       <span>Software Engineer</span>
       <p>
@@ -128,7 +128,7 @@ export default function AboutUs() {
     </div>
 
     <div className="testimony-card">
-      <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Mahi" />
+      <img src="https://randomuser.me "/>
       <h3>Mahi Alemu</h3>
       <span>Business Owner</span>
       <p>
