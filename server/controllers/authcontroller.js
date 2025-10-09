@@ -62,7 +62,7 @@ const login = asyncHandler (async (req,res) =>{
             accessToken,
             role: user.role,
             name: user.name,
-            id: user._id,
+            _id: user._id,
           });
     } else {
         res.status(401);

@@ -5,4 +5,21 @@
     background-color: rgb(227, 241, 240);
     padding:5rem;
     border-radius: 12px;
+    display: flex;
+    background-color: rgb(227, 241, 240);
+    padding:5rem;
+    border-radius: 12px;
+    display: flex;
+}
+.verify-left,
+.verify-right {
+  flex: 1;
+  min-width: 280px;
+  max-width: 500px;
+}
+
+.verify-left label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
 }

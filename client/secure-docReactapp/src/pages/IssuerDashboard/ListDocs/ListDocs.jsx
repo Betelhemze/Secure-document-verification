@@ -5,6 +5,7 @@ import './listDocs.css'
 const ListDocs = () => {
   
   const [documents, setDocuments] = useState([]);
+  const [selectedHistory, setSelectedHistory] = useState(null);
   const fetchDocuments = async () => {
   try {
     const token = localStorage.getItem("token");
@@ -52,10 +53,11 @@ const handleHistory = async (id) => {
       `http://localhost:3000/api/document/${id}/history`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    console.log("Document history:", res.data);
-    // you can show it in a modal later
+    setSelectedHistory(res.data.history);
+    
   } catch (err) {
     console.error(err);
+    alert("Failed to fetch document history.");
   }
 };
 
@@ -151,6 +153,12 @@ const handleHistory = async (id) => {
                 <span className="nav-item">Uploaded Document</span>
               </Link>
             </li>
+            <li>
+                          <Link to="/IssuedDocxs">
+                            <i class="bx  bx-file-plus"></i>
+                            <span className="nav-item">Issue Document</span>
+                          </Link>
+                        </li>
             <li>
               <Link to="/listDocs" className="actives">
                 <i class="bx  bx-checklist"></i>
@@ -289,7 +297,27 @@ const handleHistory = async (id) => {
                 )}
               </tbody>
             </table>
+             
+      {selectedHistory && (
+        <div className="history-modal">
+          <h3>Document History</h3>
+          {selectedHistory.length === 0 ? (
+            <p>No history available</p>
+          ) : (
+            <ul>
+              {selectedHistory.map((item, index) => (
+                <li key={index}>
+                  {item.action} by {item.user} on{" "}
+                  {new Date(item.date).toLocaleString()}
+                </li>
+              ))}
+            </ul>
+          )}
+          <button onClick={() => setSelectedHistory(null)}>Close</button>
+        </div>
+      )}
           </section>
+          
         </div>
       </main>
     </div>

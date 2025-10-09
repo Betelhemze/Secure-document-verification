@@ -32,6 +32,15 @@ const documentSchema = new mongoose.Schema(
       ],
       default: "Issued",
     },
+    expiryDate: Date,
+    history: [
+      {
+        action: String,
+        user: String,
+        role: String,
+        date: { type: Date, default: Date.now },
+      },
+    ],
   },
   { timestamps: true }
 );

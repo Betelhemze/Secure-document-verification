@@ -24,7 +24,7 @@ const uploadDocs = asyncHandler(async(req,res) =>{
        res.status(403);
        throw new Error("Access denied");
      }
-
+    
      const newDoc = await Document.create({
        title,
        documentType,
@@ -33,6 +33,14 @@ const uploadDocs = asyncHandler(async(req,res) =>{
        ownerName,
        uploadedBy: req.user.id,
        verified: false,
+       status: "Draft",
+       history: [
+         {
+           action: "Document created (status set to Draft)",
+           userName: req.user.name,
+           date: new Date(),
+         },
+       ],
      });
      //generte a qrcode(dataURL) from the document uniqueID
      const qrCodeData = await QRCode.toDataURL(`http://localhost:5173`);
@@ -46,6 +54,8 @@ const uploadDocs = asyncHandler(async(req,res) =>{
          document: newDoc,
        });
 });
+
+
  const getDocuments = async (req, res) => {
   try {
     const { type, status, startDate, endDate } = req.query;
@@ -69,23 +79,45 @@ const uploadDocs = asyncHandler(async(req,res) =>{
 };
 
  const updateDocumentStatus = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { status } = req.body;
+   try {
+     const { id } = req.params;
+     const { status } = req.body;
 
-    const updated = await Document.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true }
-    );
-    if (!updated)
-      return res.status(404).json({ message: "Document not found" });
+     // Get the current user name or fallback
+     const userName = req.user?.name || "System";
 
-    res.status(200).json({ message: "Status updated", document: updated });
-  } catch (err) {
-    res.status(500).json({ message: "Failed to update document" });
-  }
-};
+     // Find document first (so we can verify it exists)
+     const doc = await Document.findById(id);
+     if (!doc) {
+       return res.status(404).json({ message: "Document not found" });
+     }
+
+     // Update status
+     doc.status = status;
+console.log("Updated status:", doc.status);
+
+     // Push a new history record
+     doc.history.push({
+       action: `Status changed to ${status}`,
+       user: userName,
+       date: new Date(),
+       
+     });
+
+     // Save document
+     await doc.save();
+
+     res.status(200).json({
+       message: "Status updated successfully",
+       document: doc,
+       
+     });
+   } catch (err) {
+     console.error("Error updating document status:", err);
+     res.status(500).json({ message: "Failed to update document" });
+   }
+ };
+
 
  const getDocumentHistory = async (req, res) => {
   try {
@@ -93,10 +125,126 @@ const uploadDocs = asyncHandler(async(req,res) =>{
     const doc = await Document.findById(id);
     if (!doc) return res.status(404).json({ message: "Document not found" });
     res.status(200).json({ history: doc.history || [] });
+    console.log("Fetched history:", doc.history);
+
   } catch (err) {
     res.status(500).json({ message: "Failed to get history" });
   }
 };
+
+const getDashboardStats = async (req, res) => {
+  try {
+    const total = await Document.countDocuments();
+    const pending = await Document.countDocuments({ status: "Issued" });
+    const verified = await Document.countDocuments({ status: "Verified" });
+    const rejected = await Document.countDocuments({ status: "Rejected" });
+
+    res.status(200).json({
+      total,
+      pending,
+      verified,
+      rejected,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch dashboard stats" });
+  }
+};
+
+const verifyDocument = async (req, res) => {
+  try {
+    const { uniqueId } = req.params;
+
+    // 1️⃣ Check if req.user exists
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    const verifierId = req.user.id;
+    const userRole = req.user.role;
+
+    // 2️⃣ Ensure user is a verifier
+    if (userRole !== "Verifier") {
+      return res.status(403).json({
+        success: false,
+        message: "Forbidden: Only verifiers can verify documents.",
+      });
+    }
+
+    // 3️⃣ Find the document
+    const document = await Document.findOne({ uniqueId }).populate(
+      "uploadedBy",
+      "name institution"
+    );
+
+    if (!document) {
+      return res.status(404).json({
+        success: false,
+        message: "Document not found",
+      });
+    }
+
+    // 4️⃣ Check status BEFORE updating
+    if (document.status !== "Issued") {
+      return res.status(400).json({
+        success: false,
+        message: "Document exists but is not issued yet",
+      });
+    }
+
+    // 5️⃣ Update document to Verified
+    document.status = "Verified";
+    document.verified = true;
+    document.verifiedBy = verifierId;
+    document.verifiedAt = new Date();
+
+    // Add to history
+    document.history.push({
+      action: "Verified",
+      user: verifierId,
+      role: "Verifier",
+      date: new Date(),
+    });
+
+    await document.save();
+
+    // 6️⃣ Return minimal public info
+    res.status(200).json({
+      success: true,
+      message: "Document is authentic and verified",
+      data: {
+        title: document.title,
+        ownerName: document.ownerName || "Unknown Owner",
+        issuedBy: document.uploadedBy?.institution || "Unknown Institution",
+        issuerName: document.uploadedBy?.name || "Unknown User",
+        issueDate: document.dateOfIssue,
+        uniqueId: document.uniqueId,
+      },
+    });
+  } catch (error) {
+    console.error("Error verifying document:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error while verifying document",
+    });
+  }
+};
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -127,27 +275,7 @@ const viewIssuedDocs = asyncHandler(async (req, res) => {
     const documents = await Document.find(filter);
     res.status(200).json(documents);
 });
-const verifyDocument = asyncHandler(async (req, res) => {
-     const { id } = req.params;
 
-     if (!["verifier", "admin"].includes(req.user.role)) {
-       res.status(403);
-       throw new Error("Access denied");
-     }
-
-     const doc = await Document.findById(id);
-     if (!doc) {
-       res.status(404);
-       throw new Error("Document not found");
-     }
-
-     doc.verified = true;
-     doc.verifiedBy = req.user.id;
-     doc.verifiedAt = new Date();
-     await doc.save();
-
-     res.status(200).json({ message: "Document verified", doc });
-});
 const viewVerifiedDocs = asyncHandler(async (req, res) => {
      if (req.user.role !== "verifier") {
        res.status(403);
@@ -189,11 +317,11 @@ const viewUploadedStatus = asyncHandler(async (req, res) => {
 module.exports = {
   uploadDocs,
   viewIssuedDocs,
-  verifyDocument,
   viewVerifiedDocs,
   viewUploadedStatus,
   getDocuments,
   updateDocumentStatus,
   getDocumentHistory,
+  verifyDocument,
 };
 

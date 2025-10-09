@@ -71,6 +71,7 @@ export default function LoginSignup() {
         localStorage.setItem("token", res.data.accessToken);
         localStorage.setItem("role",res.data.role);
         localStorage.setItem("name",res.data.name);
+        localStorage.setItem("userId", res.data._id);
         if (res.data.role === "issuer"){
           navigate("/issuer");
         } else if(res.data.role == "verifier"){
@@ -155,10 +156,10 @@ export default function LoginSignup() {
             <input
               type="text"
               name="institution"
-              placeholder="instituion"
+              placeholder="Instituion"
               className="auth-input"
               onChange={handleChange}
-              value={formData.instituion}
+              value={formData.institution}
             />
           )}
 

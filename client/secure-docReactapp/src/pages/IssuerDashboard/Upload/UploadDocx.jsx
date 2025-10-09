@@ -81,6 +81,12 @@ const UploadDocx = () => {
               </Link>
             </li>
             <li>
+                                      <Link to="/IssuedDocxs">
+                                        <i class="bx  bx-file-plus"></i>
+                                        <span className="nav-item">Issue Document</span>
+                                      </Link>
+                                    </li>
+            <li>
               <Link to="/listDocs">
                 <i class="bx  bx-checklist"></i>
                 <span className="nav-item">List of documents</span>

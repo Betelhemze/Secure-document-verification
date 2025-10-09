@@ -1,32 +1,33 @@
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import React from "react";
+import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer } from "recharts";
 
-const data = [
-  { name: "Verified", value: 8 },
-  { name: "Pending", value: 4 },
-  { name: "Rejected", value: 3 },
-];
+const StatusPieChart = ({ stats }) => {
+  const data = [
+    { name: "Verified", value: stats.verified },
+    { name: "Pending", value: stats.pending },
+    { name: "Other", value: stats.total - (stats.verified + stats.pending) },
+  ];
+  const COLORS = ["#00C49F", "#FFBB28", "#FF8042"];
 
-const COLORS = ["#27c7a9", "orange", "red"];
-
-export default function StatusPieChart() {
   return (
-    <ResponsiveContainer width="100%" height={250}>
+    <ResponsiveContainer width="100%" height={300}>
       <PieChart>
-        <Tooltip />
         <Pie
           data={data}
+          dataKey="value"
           cx="50%"
           cy="50%"
-          outerRadius={80}
+          outerRadius={100}
           label
-          dataKey="value"
-          isAnimationActive={true}
         >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index]} />
+          {data.map((_, index) => (
+            <Cell key={index} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
+        <Tooltip />
       </PieChart>
     </ResponsiveContainer>
   );
-}
+};
+
+export default StatusPieChart;

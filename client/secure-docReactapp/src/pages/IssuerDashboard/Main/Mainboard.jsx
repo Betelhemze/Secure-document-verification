@@ -1,7 +1,31 @@
-import React, {useEffect} from 'react'
+import React, {useEffect,useState} from 'react'
 import { Link } from "react-router-dom";
+import axios from "axios";
 import './styles.css'
 const Mainboard = () => {
+   const [recentDocs, setRecentDocs] = useState([]);
+   const issuerId = localStorage.getItem("userId");
+   console.log("Issuer ID from localStorage:", issuerId);
+
+   useEffect(() => {
+     const fetchRecentDocs = async () => {
+       try {
+         const res = await axios.get(
+           `http://localhost:3000/api/analytics/recent/${issuerId}`,
+           {
+             headers: {
+               Authorization: `Bearer ${localStorage.getItem("token")}`,
+             },
+           }
+         );
+         setRecentDocs(res.data);
+       } catch (err) {
+         console.error("Error fetching recent documents:", err);
+       }
+     };
+     fetchRecentDocs();
+   }, [issuerId]);
+
    useEffect(() => {
      const btn = document.getElementById("btn");
      const sidebar = document.querySelector(".sidebar");
@@ -38,6 +62,12 @@ const userName = localStorage.getItem("name");
               <Link to="/UploadDocx">
                 <i class="bx  bx-file-plus"></i>
                 <span className="nav-item">Uploaded Document</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/IssuedDocxs">
+                <i class="bx  bx-file-plus"></i>
+                <span className="nav-item">Issue Document</span>
               </Link>
             </li>
             <li>
@@ -92,7 +122,6 @@ const userName = localStorage.getItem("name");
             <button className="upload-btn">Upload Document</button>
             <h4>Recent Document</h4>
             <table>
-              {" "}
               <thead>
                 <tr>
                   <th>Title</th>
@@ -101,21 +130,21 @@ const userName = localStorage.getItem("name");
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Document A</td>
-                  <td className="status verified">verified</td>
-                  <td>2023-10-02</td>
-                </tr>
-                <tr>
-                  <td>Document B</td>
-                  <td className="status rejected">rejected</td>
-                  <td>2023-10-02</td>
-                </tr>
-                <tr>
-                  <td>Document C</td>
-                  <td className="status pending">pending</td>
-                  <td>2023-10-02</td>
-                </tr>
+                {recentDocs.length > 0 ? (
+                  recentDocs.map((doc, index) => (
+                    <tr key={index}>
+                      <td>{doc.title}</td>
+                      <td className={`status ${doc.status.toLowerCase()}`}>
+                        {doc.status}
+                      </td>
+                      <td>{new Date(doc.createdAt).toLocaleDateString()}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="3">No recent documents</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

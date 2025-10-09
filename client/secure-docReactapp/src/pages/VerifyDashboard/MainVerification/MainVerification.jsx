@@ -1,7 +1,62 @@
 import React,{useState,useEffect} from 'react'
 import './mainverifiy.css'
+import { Link } from 'react-router-dom';
 import StatusPieChart from '../../../components/Charts/StatusPieChart';
+import axios from "axios"
 const MainVerification = () => {
+  const [stats, setStats] = useState({
+    total: 0,
+    pending: 0,
+    verified: 0,
+  });
+  const [monthlyUploads, setMonthlyUploads] = useState([]);
+  const issuerId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (!issuerId || !token) {
+      console.warn("Missing issuerId or token. Skipping fetch.");
+      return;
+    }
+    const fetchStats = async () => {
+      try {
+        const baseUrl = "http://localhost:3000/api";
+
+        const [totalRes, pendingRes, verifiedRes, monthlyRes] =
+          await Promise.all([
+            axios.get(`${baseUrl}/analytics/total/${issuerId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+            axios.get(`${baseUrl}/analytics/pending/${issuerId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+            axios.get(`${baseUrl}/analytics/verified/${issuerId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+            axios.get(`${baseUrl}/analytics/uploads/monthly/${issuerId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+          ]);
+
+        console.log("Total response:", totalRes.data); // ✅ Now it will run
+
+        setStats({
+          total: totalRes.data.total,
+          pending: pendingRes.data.pending,
+          verified: verifiedRes.data.verified,
+        });
+        setMonthlyUploads(
+          Array.isArray(monthlyRes.data) ? monthlyRes.data : []
+        );
+        console.log("monthlyUploads state:", monthlyUploads);
+      } catch (err) {
+        console.error(err);
+        setMonthlyUploads([]); // prevent chart from breaking
+      }
+    };
+    fetchStats();
+  }, [issuerId]);
+
     useEffect(() => {
          const btn = document.getElementById("btn");
          const sidebar = document.querySelector(".sidebar");
@@ -29,28 +84,28 @@ const MainVerification = () => {
         <nav>
           <ul className="dash">
             <li>
-              <a href="#">
+              <Link to="/">
                 <i class="bx  bx-dashboard-alt"></i>
                 <span className="nav-item">Home</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="active">
+              <Link to="/verifyDashboard" className="active">
                 <i class="bx  bx-file-plus"></i>
                 <span className="nav-item">Dashboard</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/verifyDocument">
                 <i class="bx  bx-checklist"></i>
                 <span className="nav-item">Verify Document</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="/verifiylog">
                 <i class="bx  bx-chart-line"></i>
                 <span className="nav-item">Verification Logs</span>
-              </a>
+              </Link>
             </li>
             <li>
               <button className="logout">
@@ -120,7 +175,7 @@ const MainVerification = () => {
           <div className="qucik-analysis card">
             <h4>Quick Analysis</h4>
             <div className="chart-placeholder">
-              <StatusPieChart />
+              <StatusPieChart stats={stats} />
             </div>
             <ul className="legend">
               <li>

@@ -1,37 +1,27 @@
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import React from "react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
-const data = [
-  { name: "Jan", uploads: 3 },
-  { name: "Feb", uploads: 7 },
-  { name: "Mar", uploads: 5 },
-  { name: "Apr", uploads: 10 },
-  { name: "May", uploads: 8 },
-];
+const UploadLineChart = ({ data }) => {
+  if (!Array.isArray(data)) {
+    console.error("UploadLineChart expected an array but got:", data);
+    return <p>No chart data available</p>;
+  }
+  const chartData = data.map((item) => ({
+    month: new Date(2025, item._id - 1).toLocaleString("default", { month: "short" }),
+    uploads: item.count,
+  }));
 
-export default function UploadLineChart() {
   return (
-    <ResponsiveContainer width="100%" height={250}>
-      <LineChart data={data}>
+    <ResponsiveContainer width="100%" height={300}>
+      <LineChart data={chartData}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="month" />
         <YAxis />
         <Tooltip />
-        <Line
-          type="monotone"
-          dataKey="uploads"
-          stroke="#27c7a9"
-          strokeWidth={2}
-          activeDot={{ r: 6 }}
-        />
+        <Line type="monotone" dataKey="uploads" stroke="#8884d8" strokeWidth={2} />
       </LineChart>
     </ResponsiveContainer>
   );
-}
+};
+
+export default UploadLineChart;

@@ -1,10 +1,68 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import UploadLineChart from '../../../components/Charts/UploadLineChart';
 import StatusPieChart from '../../../components/Charts/StatusPieChart';
 import { Link } from 'react-router-dom';
+import axios from "axios";
 
 import './issueranalysis.css'
 const IssuerAnalysis = () => {
+  
+
+  const [stats, setStats] = useState({
+    total: 0,
+    pending: 0,
+    verified: 0,
+  });
+  const [monthlyUploads, setMonthlyUploads] = useState([]);
+  const issuerId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    if (!issuerId || !token) {
+      console.warn("Missing issuerId or token. Skipping fetch.");
+      return;
+    }
+    const fetchStats = async () => {
+
+      try {
+        
+        const baseUrl = "http://localhost:3000/api";
+
+        const [totalRes, pendingRes, verifiedRes, monthlyRes] =
+          await Promise.all([
+            axios.get(`${baseUrl}/analytics/total/${issuerId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+            axios.get(`${baseUrl}/analytics/pending/${issuerId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+            axios.get(`${baseUrl}/analytics/verified/${issuerId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+            axios.get(`${baseUrl}/analytics/uploads/monthly/${issuerId}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }),
+          ]);
+
+        console.log("Total response:", totalRes.data); // ✅ Now it will run
+
+        setStats({
+          total: totalRes.data.total,
+          pending: pendingRes.data.pending,
+          verified: verifiedRes.data.verified,
+        });
+        setMonthlyUploads(
+          Array.isArray(monthlyRes.data) ? monthlyRes.data : []
+        );
+        console.log("monthlyUploads state:", monthlyUploads);
+      } catch (err) {
+        console.error(err);
+        setMonthlyUploads([]); // prevent chart from breaking
+      }
+    };
+    fetchStats();
+  }, [issuerId]);
+
      useEffect(() => {
                  const btn = document.getElementById("btn");
                  const sidebar = document.querySelector(".sidebar");
@@ -44,13 +102,20 @@ const IssuerAnalysis = () => {
               </Link>
             </li>
             <li>
-              <Link to="/listDocs" className="actives">
+              <Link to="/IssuedDocxs">
+                <i class="bx  bx-file-plus"></i>
+                <span className="nav-item">Issue Document</span>
+              </Link>
+            </li>
+
+            <li>
+              <Link to="/listDocs">
                 <i class="bx  bx-checklist"></i>
                 <span className="nav-item">List of documents</span>
               </Link>
             </li>
             <li>
-              <Link to="/issuerAnalytics">
+              <Link to="/issuerAnalytics" className="actives">
                 <i class="bx  bx-chart-line"></i>
                 <span className="nav-item">Analytics</span>
               </Link>
@@ -73,20 +138,20 @@ const IssuerAnalysis = () => {
             <span>🔔</span>
           </div>
         </header>
-        <h1 className="dashboard-title">List of docx</h1>
+        <h1 className="dashboard-title">Issued Analytics</h1>
 
         <section className="stats-grid">
           <div className="card">
             <h4>Total Uploaded Document</h4>
-            <p className="value">15</p>
+            <p className="value">{stats.total}</p>
           </div>
           <div className="card">
-            <h4>Pending Verifications</h4>
-            <p className="value">4</p>
+            <h4>Pending Verification</h4>
+            <p className="value">{stats.pending}</p>
           </div>
           <div className="card">
             <h4>Verified Documents</h4>
-            <p className="value">8</p>
+            <p className="value">{stats.verified}</p>
           </div>
         </section>
 
@@ -94,13 +159,13 @@ const IssuerAnalysis = () => {
           <div className="chart-box">
             <h4>Uploads per Month</h4>
             <div className="chart-placeholder">
-              <UploadLineChart />
+              <UploadLineChart data={monthlyUploads} />
             </div>
           </div>
           <div className="chart-box">
             <h4>Quick Analysis</h4>
             <div className="chart-placeholder">
-              <StatusPieChart />
+              <StatusPieChart stats={stats} />
             </div>
             <ul className="legend">
               <li>
